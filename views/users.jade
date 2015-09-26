@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/angular-material/angular-material.css')
+    link(rel='stylesheet', href='/Materialize/dist/css/materialize.css')
+    script(src='/jquery/dist/jquery.js')
+    script(src='/Materialize/dist/js/materialize.js')
+    script(src='/angular/angular.js')
+    script(src='/javascripts/myApp.js')
+    body(ng-app="myApp")
+    div(class="container")
+      div(class="row")
+        div(class="col m4")
+          div(class="row")
+            div(class="col s12 m12")
+              img(class="responsive-img" src="http://lorempixel.com/400/200/sports")
+            div(class="divider")
+        div(class="col m8") Hello World
+  
