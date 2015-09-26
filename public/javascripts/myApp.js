@@ -1,29 +1,28 @@
-var myApp = angular.module('myApp', [])
-.service('Users',['$http', '$cacheFactory', function($http){
-
-	return {
-		all: function() {
-			var req = {
-				url: '/api',
-				method: 'GET',
-				cache: true,
-				headers : {
-					'Content-Type': 'application/json'
-				}
-			};
-			return $http(req);
-		}
-	};
-}])
-.controller('UsersController', ['$scope','Users', function($scope, Users){
-	var successCallback = function(users) {
-		console.log(users.data);
-		return $scope.users = users.data;
-	};
-	var errorCallback = function(users) {
-		console.log(status);
-	};
-	$scope.test = "Hello World!";
-	$scope.users = [];
-	Users.all().then(successCallback,errorCallback);
-}]);
+angular.module('myApp', ['ngRoute', 'myApp.Services', 'myApp.Controllers'])
+.config(function($routeProvider, $locationProvider){
+	
+	$routeProvider
+	.when('/profiles/:id', {
+		templateUrl: 'partials/profile',
+		controller: 'ProfileController'
+	})
+	.when('/profiles', {
+		templateUrl: 'partials/profiles',
+		controller: 'ProfilesController'
+	})
+	.when('/articles', {
+		templateUrl: 'partials/articles',
+		controller: 'ArticlesController'
+	})
+	.when('/articles/add', {
+		templateUrl: 'partials/addArticle',
+		controller: 'ArticlesController'
+	})
+	.when('/articles/:slug', {
+		templateUrl: 'partials/article',
+		controller: 'ArticleController'
+	})
+	.otherwise({
+		redirectTo: '/articles'
+	});
+});
