@@ -1,0 +1,18 @@
+div(class="container")
+  h4 Add new article
+  br
+  br
+  div(class="row")
+      form(class="col m12")
+        div(class="input-field col m12 s12")
+          input(id="title" type="text" class="validate" ng-model="object.title")
+          label(for="title") Title
+        div(class="input-field col m12 s12")
+          textarea(id="icon_prefix2" class="materialize-textarea" ng-model="object.content")
+          label(for="icon_prefix2") Content
+        div(class="col m2 offset-m10 s4 offset-s8")
+          button(class="btn waves-effect waves-light" type="submit" name="action" ng-click="add(object)") Ajouter
+          i(class="material-icons right" value="send")
+        
+    
+    

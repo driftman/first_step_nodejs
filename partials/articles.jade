@@ -1,0 +1,13 @@
+div(class="container")
+  h3 Articles
+  table
+    thead
+      tr
+        th Title 
+        th Content
+        th Published at
+    tbody
+      tr(ng-repeat="article in articles")
+        td {{ article.title }}
+        td {{ article.content }}
+        td {{ article.created_at }}
