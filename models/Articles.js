@@ -1,6 +1,5 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var objectId = mongoose.Schema.Types.ObjectId;
 var ArticleSchema = new Schema({
 	title : {
 		type: String,
@@ -9,7 +8,7 @@ var ArticleSchema = new Schema({
 		type: String,
 	},
 	account: {
-		type: objectId,
+		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Account'
 	},
 	created_at : {

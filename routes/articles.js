@@ -14,8 +14,11 @@ router.get('/', function(req, res, next) {
 	});
 });
 
-router.get('/:slug', function(req, res, next) {
-	Article.find({title: req.params.slug}, function(err, article){
+router.get('/:id', function(req, res, next) {
+	console.log('Inside GET :id');
+	console.log(req.params.id);
+
+	Article.find({_id: req.params.id}, function(err, article){
 		if(err)
 			next(err);
 		else
@@ -26,71 +29,68 @@ router.get('/:slug', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next){
-	var article = new Article({});
-	article.title = req.body.title;
-	article.content = req.bodycontent;
-	var accountObjectId = new ObjectId("56064af0132abfbc2bba0c25");
-	Account.update({_id: accountObjectId}, {articles: articles.push(article._id)}, null, function(err, data){
-		if(err)
-			next(err);
-		else
-			console.log(data);
-	})
-	// This is just a simulation !
-	article.account = accountObjectId;
+	console.log("POST /articles/ Request Body => "+req.query);
+	console.log(req.query);
+	var article = new Article(
+		{ 
+			account: new mongoose.Types.ObjectId("5608d1d84b77357a0c2cdad2")
+		});
+	article.title = req.query.title;
+	article.content = req.query.content;
 	console.log(article.account);
 	article.save(function(err, article){
 		if(err)
 		{
-			console.log("Erreur"); return;
+			console.log("Erreur = >"+err); next();
 		}
 		else
 		{
 			console.log(article);
+			return;
 		}
 	});
+	res.json(article);
 });
 
 router.put('/', function(req, res, next){
-	console.log("Request Received : "+JSON.stringify(req.body));
 	var articleId = req.body._id;
-	var mTitle = req.body.title;
-	var mContent = req.body.content;
+	var mTitle = req.query.title;
+	var mContent = req.query.content;
 	Article.update(
-		{_id: new ObjectId("56064af0132abfbc2bba0c28")}, 
+		{_id: new mongoose.Types.ObjectId(articleId)}, 
 		{title: mTitle, content: mContent}, 
 		null, 
 		function(err, modifiedArticle){
 			if(err)
 			{
-				console.log("Erreur => Update"); return;
+				console.log("Erreur => Update"); next();
 			}
 			else
 			{
-				console.log("Success => "+modifiedArticle);
 				res.json(modifiedArticle);
+				return;
 			}
 		});
 });
 
 router.delete('/', function(req, res, next){
-	var articleId = new ObjectId(req.body._id);
-	Article.remove({
-		_id: articleId
-	},
-	function(err, deletedArticle)
-	{
+	var articleId = req.query._id;
+	console.log("Backend "+articleId);
+
+	Article.remove({ _id: articleId}, function(err){
 		if(err)
-		{
-			console.log("Erreur! Delete"); return;
-		}
+			{
+				console.log(err);
+				next();
+			}
 		else
-		{
-			console.log("Success! Deleted "+deletedArticle); 
-			res.json(deletedArticle);
-		}
-	}
-	);
+			{
+				console.log("Success");
+				res.json({ flash: "Deleted Successfully !"});
+			}
+	});
+
+	
 });
 
 module.exports = router;

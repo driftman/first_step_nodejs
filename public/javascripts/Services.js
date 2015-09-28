@@ -22,11 +22,12 @@ angular.module('myApp.Services', [])
 
 			return $http(req);
 		},
-		delete : function(id) {
+		delete : function(object) {
+
 			var req = {
 				method: 'DELETE',
-				params: {_id: id},
-				url: '/articles'
+				params: object,
+				url: '/profiles'
 			};
 			return $http(req);
 		}
@@ -39,8 +40,8 @@ angular.module('myApp.Services', [])
 		all : function() {
 			return $http.get('/articles');
 		},
-		get : function(slug) {
-			return $http.get("/articles/"+slug);
+		get : function(_id) {
+			return $http.get("/articles/"+_id);
 		},
 		add : function(object) {
 			var req = {
@@ -58,10 +59,10 @@ angular.module('myApp.Services', [])
 			};
 			return $http(req);
 		},
-		delete : function(id) {
+		delete : function(object) {
 			var req = {
 				method: 'DELETE',
-				params: {_id: id},
+				params: object,
 				url: '/articles'
 			};
 			return $http(req);

@@ -20,19 +20,32 @@ angular.module('myApp.Controllers', ['myApp.Services'])
 				console.log("Error"+ status);
 			});
 		};
-		$scope.update = function(object) {
-			return Article.update(object).success(function(data, status, headers){
-				console.log("Success"+data);
-			}).error(function(data, status, headers){
-				console.log("Error"+ status);
-			});
-		};
-		$scope.delete = function(id) {
-			return Article.delete(id).success(function(data, status, headers){
-				console.log("Success Deleted !");
+		$scope.delete = function(object) {
+			console.log(object);
+			return Article.delete(object).success(function(data, status, headers){
+				console.log("Success Deleted Controller !"+status);
 			}).error(function(data, status, headers){
 				console.log("Error"+ status);
 			});
 		};
 
-}]);
+}])
+.controller('ArticleController', ['$scope', '$routeParams', 'Article', 
+	function($scope, $routeParams, Article){
+		$scope.test = $routeParams._id;
+		$scope.article = {};
+		Article.get($routeParams._id).success(
+			function(data, status, headers){
+				console.log("THIS IS IT : "+data);
+				$scope.article = data;
+			}).error(function(data, status, headers){
+				console.log("Erreur ! Controller ! ArticleController ! get() "+status);
+			});
+		$scope.update = function(object) {
+			return Article.update(object).success(function(data, status, headers){
+				console.log("Success "+status);
+			}).error(function(data, status, headers){
+				console.log("Error"+ status);
+			});
+		};
+	}]);

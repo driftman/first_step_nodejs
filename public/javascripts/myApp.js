@@ -18,11 +18,12 @@ angular.module('myApp', ['ngRoute', 'myApp.Services', 'myApp.Controllers'])
 		templateUrl: 'partials/addArticle',
 		controller: 'ArticlesController'
 	})
-	.when('/articles/:slug', {
-		templateUrl: 'partials/article',
+	.when('/articles/:_id/edit', {
+		templateUrl: 'partials/editArticle',
 		controller: 'ArticleController'
-	})
-	.otherwise({
-		redirectTo: '/articles'
 	});
+
+	// .otherwise({
+	// 	redirectTo: '/articles'
+	// });
 });
